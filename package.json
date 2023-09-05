@@ -24,6 +24,7 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.12.0",
     "vitest": "^0.34.2"
   }
 }
