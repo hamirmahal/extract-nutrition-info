@@ -1,38 +1,38 @@
-"use client";
+'use client'
 
-import React from "react";
+import React from 'react'
 
 const NutrientForm: React.FC = () => {
-  const [fdcId, setFdcId] = React.useState(173687);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [spaceSeparatedAmounts, setSpaceSeparatedAmounts] = React.useState("");
+  const [fdcId, setFdcId] = React.useState(173687)
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [spaceSeparatedAmounts, setSpaceSeparatedAmounts] = React.useState('')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      setIsLoading(true); // Set loading state
+      setIsLoading(true) // Set loading state
 
-      const response = await fetch(`/api/getNutrients?fdcId=${fdcId}`);
-      const data = await response.json();
+      const response = await fetch(`/api/getNutrients?fdcId=${fdcId}`)
+      const data = await response.json()
       if (data.error) {
-        throw Error(data.error);
+        throw Error(data.error)
       }
 
-      setSpaceSeparatedAmounts(data.spaceSeparatedList);
+      setSpaceSeparatedAmounts(data.spaceSeparatedList)
       console.info(
-        "The backend can make",
+        'The backend can make',
         data.numApiCallsLeft,
-        "more API calls."
-      );
+        'more API calls.'
+      )
     } catch (error) {
       setSpaceSeparatedAmounts(
-        "Fetching FoodData Central ID " + fdcId + " failed."
-      );
-      console.error(error);
+        'Fetching FoodData Central ID ' + fdcId + ' failed.'
+      )
+      console.error(error)
     } finally {
-      setIsLoading(false); // Reset loading state
+      setIsLoading(false) // Reset loading state
     }
-  };
+  }
 
   return (
     <div className="p-4 w-full">
@@ -58,7 +58,7 @@ const NutrientForm: React.FC = () => {
           className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300"
           disabled={isLoading}
         >
-          {isLoading ? "Loading..." : "Get Nutrients"}
+          {isLoading ? 'Loading...' : 'Get Nutrients'}
         </button>
       </form>
       <div className="mt-4">
@@ -68,7 +68,7 @@ const NutrientForm: React.FC = () => {
         </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NutrientForm;
+export default NutrientForm
