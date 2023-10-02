@@ -1,12 +1,12 @@
 'use client'
 
+import mixpanel from 'mixpanel-browser'
 import React from 'react'
 
 const NutrientForm: React.FC = () => {
   const [fdcId, setFdcId] = React.useState(173687)
   const [isLoading, setIsLoading] = React.useState(false)
   const [spaceSeparatedAmounts, setSpaceSeparatedAmounts] = React.useState('')
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
@@ -24,6 +24,11 @@ const NutrientForm: React.FC = () => {
         data.numApiCallsLeft,
         'more API calls.'
       )
+      mixpanel.track('Form Successfully Submitted', {
+        fdcId,
+        apiCallsLeft: data.numApiCallsLeft,
+        urlForConvenience: `https://fdc.nal.usda.gov/fdc-app.html#/food-details/${fdcId}/nutrients`,
+      })
     } catch (error) {
       setSpaceSeparatedAmounts(
         'Fetching FoodData Central ID ' + fdcId + ' failed.'
@@ -33,6 +38,19 @@ const NutrientForm: React.FC = () => {
       setIsLoading(false) // Reset loading state
     }
   }
+
+  React.useEffect(() => {
+    if (process.env.NEXT_PUBLIC_MIXPANEL_TOKEN) {
+      mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN, {
+        debug: true,
+        ignore_dnt: true,
+        track_pageview: true,
+        persistence: 'localStorage',
+      })
+    } else {
+      console.warn('Mixpanel token not found')
+    }
+  }, [])
 
   return (
     <div className="p-4 w-full">
