@@ -20,7 +20,7 @@ export async function GET(request: Request) {
       {
         headers,
         status: 400,
-      }
+      },
     );
   }
   if (!response.ok) {
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
       {
         headers,
         status: 500,
-      }
+      },
     );
   }
 
@@ -44,7 +44,7 @@ export async function GET(request: Request) {
   console.info(
     "I have",
     response.headers.get("x-ratelimit-remaining"),
-    "calls to the FoodData Central API remaining."
+    "calls to the FoodData Central API remaining.",
   );
   return new Response(JSON.stringify({ numApiCallsLeft, spaceSeparatedList }), {
     headers,
@@ -58,7 +58,7 @@ const spaceSeparatedListCreatedFrom = (
       name: string;
       unitName: string;
     };
-  }>
+  }>,
 ) => {
   const fdcNutrientToAmount = new Map<string, number>();
   amountAndNutrient.forEach((nutrientAndAmount) => {
@@ -159,7 +159,7 @@ if (import.meta.vitest) {
   const { it, expect } = import.meta.vitest;
   it("extracts the appropriate quantities from a FoodData Central object", () => {
     expect(spaceSeparatedListCreatedFrom(salmonData)).toBe(
-      "100 117 4.32 0.929 0 0.995 2.023 0.183 0.267 0.45 23 672 0 0 0 0 0 0 18.28 17.1 11 0.85 175 26 0 1.35 0.1 0.023 0.101 4.72 0.278 2 3.26 0 0.87 164 0 18 0.31 32.4 0 89 0.23 0.017 0.842 1.486 0.942 1.106 1.094 1.872 0.196 2.729 0.878 0.538 1.679 0.541 0.714 0.646 0.746 0.801 0.205 0.617"
+      "100 117 4.32 0.929 0 0.995 2.023 0.183 0.267 0.45 23 672 0 0 0 0 0 0 18.28 17.1 11 0.85 175 26 0 1.35 0.1 0.023 0.101 4.72 0.278 2 3.26 0 0.87 164 0 18 0.31 32.4 0 89 0.23 0.017 0.842 1.486 0.942 1.106 1.094 1.872 0.196 2.729 0.878 0.538 1.679 0.541 0.714 0.646 0.746 0.801 0.205 0.617",
     );
   });
 }
