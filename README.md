@@ -1,3 +1,4 @@
+[![Audit](https://github.com/hamirmahal/extract-nutrition-info/actions/workflows/audit.yml/badge.svg)](https://github.com/hamirmahal/extract-nutrition-info/actions/workflows/audit.yml)
 [![Test](https://github.com/hamirmahal/extract-nutrition-info/actions/workflows/test.yml/badge.svg)](https://github.com/hamirmahal/extract-nutrition-info/actions/workflows/test.yml)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
