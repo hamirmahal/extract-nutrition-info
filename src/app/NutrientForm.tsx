@@ -43,7 +43,6 @@ const NutrientForm: React.FC = () => {
     if (process.env.NEXT_PUBLIC_MIXPANEL_TOKEN) {
       mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN, {
         debug: true,
-        ignore_dnt: true,
         track_pageview: true,
         persistence: "localStorage",
       });
