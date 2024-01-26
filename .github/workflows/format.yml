@@ -1,7 +1,7 @@
-name: Check formatting
+name: Format
 on: [push]
 jobs:
-  formatting:
+  format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
