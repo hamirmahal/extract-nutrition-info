@@ -1,4 +1,5 @@
 [![Audit](https://github.com/hamirmahal/extract-nutrition-info/actions/workflows/audit.yml/badge.svg)](https://github.com/hamirmahal/extract-nutrition-info/actions/workflows/audit.yml)
+[![Format](https://github.com/hamirmahal/extract-nutrition-info/actions/workflows/format.yml/badge.svg)](https://github.com/hamirmahal/extract-nutrition-info/actions/workflows/format.yml)
 [![Lighthouse](https://github.com/hamirmahal/extract-nutrition-info/actions/workflows/lighthouse.yml/badge.svg)](https://github.com/hamirmahal/extract-nutrition-info/actions/workflows/lighthouse.yml)
 [![Test](https://github.com/hamirmahal/extract-nutrition-info/actions/workflows/test.yml/badge.svg)](https://github.com/hamirmahal/extract-nutrition-info/actions/workflows/test.yml)
 
