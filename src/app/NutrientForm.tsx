@@ -1,5 +1,6 @@
 "use client";
 
+import * as getNutrientsTypes from "@/types/getNutrients";
 import mixpanel from "mixpanel-browser";
 import React from "react";
 
@@ -13,8 +14,10 @@ const NutrientForm: React.FC = () => {
       setIsLoading(true); // Set loading state
 
       const response = await fetch(`/api/getNutrients?fdcId=${fdcId}`);
-      const data = await response.json();
-      if (data.error) {
+      const data = (await response.json()) as
+        | getNutrientsTypes.Response
+        | getNutrientsTypes.Error;
+      if ("error" in data) {
         throw Error(data.error);
       }
 

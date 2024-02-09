@@ -1,41 +1,32 @@
 // https://stackoverflow.com/questions/75418329/how-do-you-put-api-routes-in-the-new-app-folder-of-next-js/75418737#75418737
 
+import * as getNutrientsTypes from "@/types/getNutrients";
+
 // This is solely for unit testing a function at the end of this file.
 import salmonData from "./salmonData";
 
-/**
- * @see https://nextjs.org/docs/app/building-your-application/routing/route-handlers
- */
-export async function GET(request: Request) {
-  const url = new URL(request.url);
-  const headers = { "content-type": "application/json" };
-  const foodDataCentralId = url.searchParams.get("fdcId");
-  const fetchUrl = `https://api.nal.usda.gov/fdc/v1/food/${foodDataCentralId}?api_key=DEMO_KEY`;
-  const response = await fetch(fetchUrl);
+const analyzeResponse = async (
+  response: Response,
+  foodDataCentralId: string | null,
+): Promise<
+  [getNutrientsTypes.Response | getNutrientsTypes.Error, number | undefined]
+> => {
   if (!foodDataCentralId) {
-    return new Response(
-      JSON.stringify({
-        error: "FoodData Central ID not provided in the query parameter",
-      }),
-      {
-        headers,
-        status: 400,
-      },
-    );
+    return [
+      { error: "FoodData Central ID not provided in the query parameter" },
+      400,
+    ];
   }
   if (!response.ok) {
-    return new Response(
-      JSON.stringify({
+    return [
+      {
         error:
           "Fetching nutrients for FoodData Central ID " +
           foodDataCentralId +
           " failed.",
-      }),
-      {
-        headers,
-        status: 500,
       },
-    );
+      500,
+    ];
   }
 
   const json = await response.json();
@@ -46,8 +37,27 @@ export async function GET(request: Request) {
     response.headers.get("x-ratelimit-remaining"),
     "calls to the FoodData Central API remaining.",
   );
-  return new Response(JSON.stringify({ numApiCallsLeft, spaceSeparatedList }), {
+  return [{ numApiCallsLeft, spaceSeparatedList }, undefined];
+};
+
+/**
+ * @see https://nextjs.org/docs/app/building-your-application/routing/route-handlers
+ */
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const headers = { "content-type": "application/json" };
+  const foodDataCentralId = url.searchParams.get("fdcId");
+  const fetchUrl = `https://api.nal.usda.gov/fdc/v1/food/${foodDataCentralId}?api_key=DEMO_KEY`;
+  const response = await fetch(fetchUrl);
+  const [obj, status] = await analyzeResponse(response, foodDataCentralId);
+  if ("spaceSeparatedList" in obj) {
+    return new Response(JSON.stringify(obj), {
+      headers,
+    });
+  }
+  return new Response(JSON.stringify(obj), {
     headers,
+    status,
   });
 }
 
