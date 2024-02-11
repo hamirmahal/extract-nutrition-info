@@ -3,6 +3,7 @@ export type Error = {
 };
 
 export type Response = {
+  missingNutrients: string[];
   numApiCallsLeft: string | null;
   spaceSeparatedList: string;
 };

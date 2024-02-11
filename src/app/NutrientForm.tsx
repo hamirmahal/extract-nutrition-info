@@ -7,6 +7,7 @@ import React from "react";
 const NutrientForm: React.FC = () => {
   const [fdcId, setFdcId] = React.useState(173687);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [missingNutrients, setMissingNutrients] = React.useState<string[]>([]);
   const [spaceSeparatedAmounts, setSpaceSeparatedAmounts] = React.useState("");
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,6 +22,8 @@ const NutrientForm: React.FC = () => {
         throw Error(data.error);
       }
 
+      const { missingNutrients } = data;
+      setMissingNutrients(missingNutrients);
       setSpaceSeparatedAmounts(data.spaceSeparatedList);
       console.info(
         "The backend can make",
@@ -33,6 +36,7 @@ const NutrientForm: React.FC = () => {
         urlForConvenience: `https://fdc.nal.usda.gov/fdc-app.html#/food-details/${fdcId}/nutrients`,
       });
     } catch (error) {
+      setMissingNutrients([]);
       setSpaceSeparatedAmounts(
         "Fetching FoodData Central ID " + fdcId + " failed.",
       );
@@ -88,6 +92,21 @@ const NutrientForm: React.FC = () => {
           {spaceSeparatedAmounts}
         </p>
       </div>
+      {missingNutrients.length > 0 && (
+        <div className="mt-4">
+          <p className="text-gray-700 dark:text-gray-300">Missing Nutrients:</p>
+          <ul className="list-inside list-disc">
+            {missingNutrients.map((nutrient) => (
+              <li
+                key={nutrient}
+                className="font-medium text-gray-900 dark:text-gray-100"
+              >
+                {nutrient}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
