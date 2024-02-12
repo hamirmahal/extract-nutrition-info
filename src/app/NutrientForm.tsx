@@ -37,9 +37,7 @@ const NutrientForm: React.FC = () => {
       });
     } catch (error) {
       setMissingNutrients([]);
-      setSpaceSeparatedAmounts(
-        "Fetching FoodData Central ID " + fdcId + " failed.",
-      );
+      setSpaceSeparatedAmounts(`Fetching FoodData Central ID ${fdcId} failed.`);
       console.error(error);
     } finally {
       setIsLoading(false); // Reset loading state
