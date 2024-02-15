@@ -3,6 +3,7 @@
 import * as getNutrientsTypes from "@/types/getNutrients";
 
 // This is solely for unit testing a function at the end of this file.
+import data from "./data";
 import salmonData from "./salmonData";
 
 const analyzeResponse = async (
@@ -190,6 +191,36 @@ if (import.meta.vitest) {
     ]);
     expect([100, ...nutrientQuantities].join(" ")).toBe(
       "100 117 4.32 0.929 0 0.995 2.023 0.183 0.267 0.45 23 672 0 0 0 0 0 0 18.28 17.1 11 0.85 175 26 0 1.35 0.1 0.023 0.101 4.72 0.278 2 3.26 0 0.87 164 0 18 0.31 32.4 0 89 0.23 0.017 0.842 1.486 0.942 1.106 1.094 1.872 0.196 2.729 0.878 0.538 1.679 0.541 0.714 0.646 0.746 0.801 0.205 0.617",
+    );
+  });
+  it("extracts the appropriate quantities from a FoodData Central object", () => {
+    const { missingNutrients, nutrientQuantities } = getDataFrom(data);
+    expect(missingNutrients).toEqual([
+      "Total lipid (fat)",
+      "Fatty acids, total saturated",
+      "Fatty acids, total trans",
+      "Fatty acids, total polyunsaturated",
+      "Fatty acids, total monounsaturated",
+      "PUFA 20:5 n-3 (EPA)",
+      "PUFA 22:6 n-3 (DHA)",
+      "DHA + EPA",
+      "Cholesterol",
+      "soluble",
+      "insoluble",
+      "Sugars, total including NLEA",
+      "Added sugars",
+      "Vitamin D (D2 + D3)",
+      "Vitamin A, RAE",
+      "Vitamin E (alpha-tocopherol)",
+      "Vitamin K (phylloquinone)",
+      "Thiamin",
+      "Vitamin B-12",
+      "biotin",
+      "iodine",
+      "molybdenum",
+    ]);
+    expect([100, ...nutrientQuantities].join(" ")).toBe(
+      "100 304 0 0 0 0 0 0 0 0 0 4 82.4 0.2 0 0 0 0 0.3 0 6 0.42 52 0 0.5 0 0 0 0.038 0.121 0.024 2 0 0 0.068 4 0 2 0.22 0.8 0 2.2 0.036 0.08 0.008 0.01 0.009 0.006 0.005 0.027 0.003 0.018 0.007 0.001 0.008 0.001 0.011 0.09 0.006 0.004 0.004 0.008",
     );
   });
 }
