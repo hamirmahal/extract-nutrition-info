@@ -83,16 +83,23 @@ const getDataFrom = (
     fdcNutrientToAmount.set(name, amount);
   });
 
-  const missingNutrients = NUTRIENT_NAMES.filter(
-    (nutrientName) => !fdcNutrientToAmount.has(nutrientName),
-  );
+  const missingNutrients = NUTRIENT_NAMES.filter((nutrient) =>
+    Array.isArray(nutrient)
+      ? nutrient.every((name) => !fdcNutrientToAmount.has(name))
+      : !fdcNutrientToAmount.has(nutrient),
+  ).map((nutrient) => (Array.isArray(nutrient) ? nutrient[0] : nutrient));
+
   const nutrientQuantities = NUTRIENT_NAMES.map((nutrientName) => {
     if (nutrientName === "DHA + EPA") {
       const dhaAmount = fdcNutrientToAmount.get("PUFA 22:6 n-3 (DHA)") ?? 0;
       const epaAmount = fdcNutrientToAmount.get("PUFA 20:5 n-3 (EPA)") ?? 0;
       return dhaAmount + epaAmount;
     }
-    return fdcNutrientToAmount.get(nutrientName) ?? 0;
+    return Array.isArray(nutrientName)
+      ? fdcNutrientToAmount.get(
+          `${nutrientName.find((name) => fdcNutrientToAmount.has(name))}`,
+        ) ?? 0
+      : fdcNutrientToAmount.get(nutrientName) ?? 0;
   });
 
   return {
@@ -122,7 +129,7 @@ const NUTRIENT_NAMES = [
   "soluble",
   // Not in FoodData Central API, but is a column in spreadsheet; should fallback to 0
   "insoluble",
-  "Sugars, total including NLEA",
+  ["Sugars, total including NLEA", "Total Sugars"],
   // Not in FoodData Central API, but is a column in spreadsheet; should fallback to 0
   "Added sugars",
   "Protein",
@@ -207,7 +214,6 @@ if (import.meta.vitest) {
       "Cholesterol",
       "soluble",
       "insoluble",
-      "Sugars, total including NLEA",
       "Added sugars",
       "Vitamin D (D2 + D3)",
       "Vitamin A, RAE",
@@ -220,7 +226,7 @@ if (import.meta.vitest) {
       "molybdenum",
     ]);
     expect([100, ...nutrientQuantities].join(" ")).toBe(
-      "100 304 0 0 0 0 0 0 0 0 0 4 82.4 0.2 0 0 0 0 0.3 0 6 0.42 52 0 0.5 0 0 0 0.038 0.121 0.024 2 0 0 0.068 4 0 2 0.22 0.8 0 2.2 0.036 0.08 0.008 0.01 0.009 0.006 0.005 0.027 0.003 0.018 0.007 0.001 0.008 0.001 0.011 0.09 0.006 0.004 0.004 0.008",
+      "100 304 0 0 0 0 0 0 0 0 0 4 82.4 0.2 0 0 82.12 0 0.3 0 6 0.42 52 0 0.5 0 0 0 0.038 0.121 0.024 2 0 0 0.068 4 0 2 0.22 0.8 0 2.2 0.036 0.08 0.008 0.01 0.009 0.006 0.005 0.027 0.003 0.018 0.007 0.001 0.008 0.001 0.011 0.09 0.006 0.004 0.004 0.008",
     );
   });
 }
