@@ -79,7 +79,7 @@ const getDataFrom = (
     const { name } = nutrient;
     // I think the only element without an amount is "Proximates", which I don't really care about,
     // and I'm not interested in kJ information.
-    if (!amount || nutrient.unitName === "kJ") return;
+    if (amount === undefined || nutrient.unitName === "kJ") return;
     fdcNutrientToAmount.set(name, amount);
   });
 
@@ -185,13 +185,9 @@ if (import.meta.vitest) {
     expect(missingNutrients).toEqual([
       "Fatty acids, total trans",
       "DHA + EPA",
-      "Carbohydrate, by difference",
-      "Fiber, total dietary",
       "soluble",
       "insoluble",
-      "Sugars, total including NLEA",
       "Added sugars",
-      "Vitamin C, total ascorbic acid",
       "biotin",
       "iodine",
       "molybdenum",
@@ -203,24 +199,11 @@ if (import.meta.vitest) {
   it("extracts the appropriate quantities from a FoodData Central object", () => {
     const { missingNutrients, nutrientQuantities } = getDataFrom(data);
     expect(missingNutrients).toEqual([
-      "Total lipid (fat)",
-      "Fatty acids, total saturated",
       "Fatty acids, total trans",
-      "Fatty acids, total polyunsaturated",
-      "Fatty acids, total monounsaturated",
-      "PUFA 20:5 n-3 (EPA)",
-      "PUFA 22:6 n-3 (DHA)",
       "DHA + EPA",
-      "Cholesterol",
       "soluble",
       "insoluble",
       "Added sugars",
-      "Vitamin D (D2 + D3)",
-      "Vitamin A, RAE",
-      "Vitamin E (alpha-tocopherol)",
-      "Vitamin K (phylloquinone)",
-      "Thiamin",
-      "Vitamin B-12",
       "biotin",
       "iodine",
       "molybdenum",
