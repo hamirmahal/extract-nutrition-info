@@ -30,11 +30,16 @@ const NutrientForm: React.FC = () => {
         data.numApiCallsLeft,
         "more API calls.",
       );
-      mixpanel.track("Form Successfully Submitted", {
-        fdcId,
-        apiCallsLeft: data.numApiCallsLeft,
-        urlForConvenience: `https://fdc.nal.usda.gov/fdc-app.html#/food-details/${fdcId}/nutrients`,
-      });
+
+      try {
+        mixpanel.track("Form Successfully Submitted", {
+          fdcId,
+          apiCallsLeft: data.numApiCallsLeft,
+          urlForConvenience: `https://fdc.nal.usda.gov/fdc-app.html#/food-details/${fdcId}/nutrients`,
+        });
+      } catch (mixpanelError) {
+        console.warn("Did you supply a Mixpanel token?", mixpanelError);
+      }
     } catch (error) {
       setMissingNutrients([]);
       setSpaceSeparatedAmounts(`Fetching FoodData Central ID ${fdcId} failed.`);
