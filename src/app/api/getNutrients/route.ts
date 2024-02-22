@@ -87,7 +87,9 @@ const getDataFrom = (
     Array.isArray(nutrient)
       ? nutrient.every((name) => !fdcNutrientToAmount.has(name))
       : !fdcNutrientToAmount.has(nutrient),
-  ).map((nutrient) => (Array.isArray(nutrient) ? nutrient[0] : nutrient));
+  )
+    .map((nutrient) => (Array.isArray(nutrient) ? nutrient[0] : nutrient))
+    .filter((nutrient) => !DATA_THAT_CAN_BE_MISSING.includes(nutrient));
 
   const nutrientQuantities = NUTRIENT_NAMES.map((nutrientName) => {
     if (nutrientName === "DHA + EPA") {
@@ -107,6 +109,8 @@ const getDataFrom = (
     nutrientQuantities,
   };
 };
+
+const DATA_THAT_CAN_BE_MISSING = ["DHA + EPA", "soluble", "insoluble"];
 
 // The order here is important. It's the order columns appear in the spreadsheet.
 // The names have to match the property names in the FoodDataCentral API.
@@ -184,9 +188,6 @@ if (import.meta.vitest) {
     const { missingNutrients, nutrientQuantities } = getDataFrom(salmonData);
     expect(missingNutrients).toEqual([
       "Fatty acids, total trans",
-      "DHA + EPA",
-      "soluble",
-      "insoluble",
       "Added sugars",
       "biotin",
       "iodine",
@@ -200,9 +201,6 @@ if (import.meta.vitest) {
     const { missingNutrients, nutrientQuantities } = getDataFrom(data);
     expect(missingNutrients).toEqual([
       "Fatty acids, total trans",
-      "DHA + EPA",
-      "soluble",
-      "insoluble",
       "Added sugars",
       "biotin",
       "iodine",
