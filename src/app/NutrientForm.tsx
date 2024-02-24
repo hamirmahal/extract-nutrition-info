@@ -22,19 +22,15 @@ const NutrientForm: React.FC = () => {
         throw Error(data.error);
       }
 
-      const { missingNutrients } = data;
+      const { missingNutrients, numApiCallsLeft, spaceSeparatedList } = data;
       setMissingNutrients(missingNutrients);
-      setSpaceSeparatedAmounts(data.spaceSeparatedList);
-      console.info(
-        "The backend can make",
-        data.numApiCallsLeft,
-        "more API calls.",
-      );
+      setSpaceSeparatedAmounts(spaceSeparatedList);
+      console.info("The backend can make", numApiCallsLeft, "more API calls.");
 
       try {
         mixpanel.track("Form Successfully Submitted", {
           fdcId,
-          apiCallsLeft: data.numApiCallsLeft,
+          apiCallsLeft: numApiCallsLeft,
           urlForConvenience: `https://fdc.nal.usda.gov/fdc-app.html#/food-details/${fdcId}/nutrients`,
         });
       } catch (mixpanelError) {
