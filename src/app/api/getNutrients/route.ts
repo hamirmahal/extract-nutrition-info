@@ -48,11 +48,14 @@ const analyzeResponse = async (
  */
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  const headers = { "content-type": "application/json" };
   const foodDataCentralId = url.searchParams.get("fdcId");
   const fetchUrl = `https://api.nal.usda.gov/fdc/v1/food/${foodDataCentralId}?api_key=DEMO_KEY`;
   const response = await fetch(fetchUrl);
   const [obj, status] = await analyzeResponse(response, foodDataCentralId);
+  const headers = {
+    "cache-control": "public, max-age=3600",
+    "content-type": "application/json",
+  };
   if ("spaceSeparatedList" in obj) {
     return new Response(JSON.stringify(obj), {
       headers,
