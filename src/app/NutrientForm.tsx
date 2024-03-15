@@ -48,7 +48,7 @@ const NutrientForm: React.FC = () => {
   React.useEffect(() => {
     if (process.env.NEXT_PUBLIC_MIXPANEL_TOKEN) {
       mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN, {
-        debug: true,
+        debug: process.env.NODE_ENV === "development",
         track_pageview: true,
         persistence: "localStorage",
       });
