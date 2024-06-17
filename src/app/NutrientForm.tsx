@@ -4,6 +4,7 @@ import * as getNutrientsTypes from "@/types/getNutrients";
 import mixpanel from "mixpanel-browser";
 import React from "react";
 
+const debug = process.env.NODE_ENV === "development";
 const NutrientForm: React.FC = () => {
   const [fdcId, setFdcId] = React.useState(173687);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -48,7 +49,7 @@ const NutrientForm: React.FC = () => {
   React.useEffect(() => {
     if (process.env.NEXT_PUBLIC_MIXPANEL_TOKEN) {
       mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_TOKEN, {
-        debug: process.env.NODE_ENV === "development",
+        debug,
         track_pageview: true,
         persistence: "localStorage",
       });
