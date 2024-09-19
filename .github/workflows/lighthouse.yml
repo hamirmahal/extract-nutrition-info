@@ -6,7 +6,7 @@
 name: Lighthouse
 on: [push]
 jobs:
-  lighthouse:
+  light:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
