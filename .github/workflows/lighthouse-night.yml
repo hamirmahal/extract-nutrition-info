@@ -6,6 +6,17 @@
 name: Lighthouse
 on: [push]
 jobs:
+  lighthouse-light:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - run: npm install && npm install -g @lhci/cli
+      - run: npm run build
+      - run: lhci collect
+      - run: lhci upload
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
   lighthouse:
     runs-on: ubuntu-latest
     steps:
