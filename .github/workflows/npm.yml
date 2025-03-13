@@ -6,6 +6,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm audit
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run lint
   prettier:
     runs-on: ubuntu-latest
     steps:
