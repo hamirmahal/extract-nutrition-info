@@ -6,8 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "prettier:check": "prettier --check .",
+    "prepare": "husky",
     "start": "next start",
     "test": "vitest",
+    "test-non-interactive": "vitest --run",
     "lint": "next lint"
   },
   "dependencies": {

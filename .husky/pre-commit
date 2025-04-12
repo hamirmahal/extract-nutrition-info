@@ -1,0 +1,4 @@
+npm audit
+npm run lint
+npm run prettier:check
+npm run test-non-interactive
