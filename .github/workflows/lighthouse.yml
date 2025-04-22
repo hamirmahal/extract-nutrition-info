@@ -3,8 +3,10 @@
 # It will then execute Lighthouse and upload the results.
 # Because we added the LHCI_GITHUB_APP_TOKEN, the results will be attached as new status checks
 # and will pass or fail based on the assert configuration in `.lighthouserc.json`.
-name: Lighthouse
 on: [push]
+name: Lighthouse
+permissions:
+  contents: read
 jobs:
   lighthouse:
     runs-on: ubuntu-latest

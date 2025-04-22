@@ -1,5 +1,7 @@
-name: npm
 on: [push]
+name: npm
+permissions:
+  contents: read
 jobs:
   audit:
     runs-on: ubuntu-latest
