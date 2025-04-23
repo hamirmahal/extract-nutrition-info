@@ -21,10 +21,7 @@ const analyzeResponse = async (
   if (!response.ok) {
     return [
       {
-        error:
-          "Fetching nutrients for FoodData Central ID " +
-          foodDataCentralId +
-          " failed.",
+        error: `Fetching nutrients for FoodData Central ID ${foodDataCentralId} failed.`,
       },
       500,
     ];
