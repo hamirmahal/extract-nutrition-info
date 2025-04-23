@@ -16,5 +16,20 @@
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "cSpell.words": [
+    "Aspartic",
+    "BFSN",
+    "Cryptoxanthin",
+    "Folate",
+    "Glutamic",
+    "Lutein",
+    "Lycopene",
+    "MUFA",
+    "NLEA",
+    "Pantothenic",
+    "Proximates",
+    "PUFA",
+    "zeaxanthin"
+  ]
 }
