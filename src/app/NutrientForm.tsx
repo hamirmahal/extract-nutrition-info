@@ -61,7 +61,6 @@ const NutrientForm: React.FC = () => {
   return (
     <div className="w-full p-4">
       <form onSubmit={handleSubmit}>
-        <div className="m-4 p-3 px-2 text-center text-lg font-bold"></div>
         <div className="mb-4">
           <label
             htmlFor="foodDataCentralId"
