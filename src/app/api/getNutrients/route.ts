@@ -74,14 +74,14 @@ const getDataFrom = (
   }>,
 ) => {
   const fdcNutrientToAmount = new Map<string, number>();
-  amountAndNutrient.forEach((nutrientAndAmount) => {
+  for (const nutrientAndAmount of amountAndNutrient) {
     const { amount, nutrient } = nutrientAndAmount;
     const { name } = nutrient;
     // I think the only element without an amount is "Proximates", which I don't really care about,
     // and I'm not interested in kJ information.
-    if (amount === undefined || nutrient.unitName === "kJ") return;
+    if (amount === undefined || nutrient.unitName === "kJ") continue;
     fdcNutrientToAmount.set(name, amount);
-  });
+  }
 
   const missingNutrients = NUTRIENT_NAMES.filter((nutrient) =>
     Array.isArray(nutrient)
