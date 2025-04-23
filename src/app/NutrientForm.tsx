@@ -1,6 +1,6 @@
 "use client";
 
-import * as getNutrientsTypes from "@/types/getNutrients";
+import type * as getNutrientsTypes from "@/types/getNutrients";
 import mixpanel from "mixpanel-browser";
 import React from "react";
 

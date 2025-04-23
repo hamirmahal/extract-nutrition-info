@@ -1,6 +1,6 @@
 // https://stackoverflow.com/questions/75418329/how-do-you-put-api-routes-in-the-new-app-folder-of-next-js/75418737#75418737
 
-import * as getNutrientsTypes from "@/types/getNutrients";
+import type * as getNutrientsTypes from "@/types/getNutrients";
 
 // This is solely for unit testing a function at the end of this file.
 import data from "./data";
