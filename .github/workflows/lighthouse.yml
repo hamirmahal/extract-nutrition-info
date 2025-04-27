@@ -4,6 +4,7 @@
 # Because we added the LHCI_GITHUB_APP_TOKEN, the results will be attached as new status checks
 # and will pass or fail based on the assert configuration in `.lighthouserc.json`.
 on: [push]
+
 name: Lighthouse
 permissions:
   contents: read
